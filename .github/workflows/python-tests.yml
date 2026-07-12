@@ -17,13 +17,16 @@ jobs:
       with:
         python-version: '3.11'
         enable-cache: true
-        # Avoids the "No file matched" warning if you don't use a lockfile yet
         cache-dependency-glob: "" 
 
-    # 3. Explicitly install pytest (fixes exit code 2)
+    # 3. Explicitly install pytest
     - name: Install dependencies
       run: uv pip install pytest
 
-    # 4. Execute the automated test file
+    # 4. Debug step: List files so you can verify test_calculator.py exists
+    - name: List files in repository
+      run: ls -la
+
+    # 5. Execute the automated test file directly
     - name: Run pytest
-      run: uv run pytest test_calculator.py
+      run: uv run pytest
