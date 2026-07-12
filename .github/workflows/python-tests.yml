@@ -9,15 +9,21 @@ jobs:
     steps:
     # 1. Download your code onto the cloud runner
     - name: Check out repository code
-      uses: actions/checkout@v5
+      uses: actions/checkout@v4
 
-    # 2. Setup uv and Python on the cloud machine
+    # 2. Set up uv and Python
     - name: Set up uv
       uses: astral-sh/setup-uv@v5
       with:
-        python-version: '3.13'
-        enable-cach: true
+        python-version: '3.11'
+        enable-cache: true
+        # Avoids the "No file matched" warning if you don't use a lockfile yet
+        cache-dependency-glob: "" 
 
-    # 3. Instally pytest so we can run our tests
-    - name: Install testing tools
+    # 3. Explicitly install pytest (fixes exit code 2)
+    - name: Install dependencies
+      run: uv pip install pytest
+
+    # 4. Execute the automated test file
+    - name: Run pytest
       run: uv run pytest test_calculator.py
