@@ -1,0 +1,27 @@
+# 1. The name of this automation pipeline
+name: My First GitHub Action
+
+# 2. The event that triggers the script (Runs on every code push)
+on: [push]
+
+# 3. What the automation actually does
+jobs:
+  say-hello-job:
+    # Tell GitHub to spin up a fresh Ubuntu Linux cloud server
+    runs-on: ubuntu-latest
+    
+    # The sequential steps this machine will execute
+    steps:
+      # Step A: Download a copy of your repo's code onto the server
+      - name: Check out repository code
+        uses: actions/checkout@v5
+
+      # Step B: Run a basic terminal command
+      - name: Run a one-line script
+        run: echo "Hello, world! The code has successfully pushed."
+
+      # Step C: Run multiple terminal commands
+      - name: Run multi-line scripts
+        run: |
+          echo "Current directory contents:"
+          ls -la
