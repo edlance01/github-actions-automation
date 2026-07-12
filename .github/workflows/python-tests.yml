@@ -1,0 +1,22 @@
+name: Python Testing Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  run-tests:
+
+    steps:
+    # 1. Download your code onto the cloud runner
+    - name: Check out repository code
+      uses: actions/checkout@v5
+
+    # 2. Setup uv and Python on the cloud machine
+    - name: Set up uv
+      uses: astral-sh/setup-python@v5
+      with:
+        python-version: '3.13'
+        enable-cach: true
+
+    # 3. Instally pytest so we can run our tests
+    - name: Install testing tools
+      run: uv run pytest test_calculator.py
